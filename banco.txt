@@ -1,0 +1,30 @@
+CREATE TABLE `cadastro_frota` (
+  `cad_id` int(11) NOT NULL AUTO_INCREMENT,
+  `cad_data` date DEFAULT NULL,
+  `cad_origem` varchar(50) DEFAULT NULL,
+  `cad_destino` varchar(50) DEFAULT NULL,
+  `cad_frete` decimal(10,2) DEFAULT NULL,
+  `cad_material` varchar(50) DEFAULT NULL,
+  `cad_peso` decimal(10,2) DEFAULT NULL,
+  `cad_motorista` varchar(25) DEFAULT NULL,
+  `cad_transportadora` varchar(50) DEFAULT NULL,
+  `cad_adiantamento` decimal(10,2) DEFAULT NULL,
+  `cad_data_adiantamento` date DEFAULT NULL,
+  `valor_viagem` decimal(10,2) DEFAULT NULL,
+  `valor_total_viagem` decimal(10,2) DEFAULT NULL,
+  `id_perfil` int(11) DEFAULT NULL,
+  PRIMARY KEY (`cad_id`),
+  KEY `fk_perfil_usuario` (`id_perfil`),
+  CONSTRAINT `fk_perfil_usuario` FOREIGN KEY (`id_perfil`) REFERENCES `usuario` (`usu_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=24 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci
+
+
+CREATE TABLE `usuario` (
+  `usu_id` int(11) NOT NULL AUTO_INCREMENT,
+  `usu_nome` varchar(50) DEFAULT NULL,
+  `usu_email` varchar(100) DEFAULT NULL,
+  `usu_telefone` varchar(20) DEFAULT NULL,
+  `usu_usuario` varchar(30) DEFAULT NULL,
+  `usu_senha` varchar(20) DEFAULT NULL,
+  PRIMARY KEY (`usu_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci
