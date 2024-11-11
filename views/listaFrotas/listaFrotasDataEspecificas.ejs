@@ -1,0 +1,116 @@
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+<script src="js/cadastroFrota/listarDatasEspecificas.js"></script>
+<style>
+    
+
+    table {
+       margin-top: 50px;
+    }
+
+    .table>:not(caption)>*>* {
+        font-size: 12px;
+    }
+
+    header {
+        display: flex;
+        justify-content: end;
+        position: relative;
+        top: 26px;
+        left: 50px;
+    }
+
+</style>
+
+<%
+function primeiraLetraDosNomesEmMaiusculo(texto) {
+    if (!texto) 
+        return '';
+    return texto.toLowerCase().split(' ').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ');
+}
+%>
+
+<header>
+
+    <form >
+        <div class="row g-3">
+            <div class="col">
+                <input type="number" hidden value="<%= usuario.id %>" id="idPerfil" name="idPerfil">
+              <input type="text" class="form-control" placeholder="Primeira Data" aria-label="Primeira Data" id="primeiraData" name="primeiraData">
+            </div>
+            <div class="col">
+              <input type="text" class="form-control" placeholder="Segunda Data" aria-label="Segunda Data" id="segundaData" name="segundaData">
+              
+            </div>
+    
+            <div class="col">
+                <button type="button" class="btn btn-primary btn-add"><i class="fa-solid fa-magnifying-glass"></i> Pesquisar</button>
+            </div>
+          </div>
+    </form>
+
+    
+</header>
+
+<div class="table-responsive">
+    <table class="table table-hover">
+        <thead>
+            <tr>
+                <th title="Data">Data</th>
+                <th title="Origem">Orig.</th>
+                <th title="Destino">Dest.</th>
+                <th title="Frete">Frete</th>
+                <th title="Material">Mat.</th>
+                <th title="Peso">Peso</th>
+                <th title="Motorista">Mot.</th>
+                <th title="Transportadora">Transp.</th>
+                <th title="Adiantamento">Adiant.</th>
+                <th title="Data Adiantamento">Dt. Adiant.</th>
+                <th title="Valor Viagem">Vl. Viagem</th>
+                <th title="Valor Total Viagem">Vl. Total</th>
+            </tr>
+        </thead>
+        <tbody>
+            
+            
+            <% for(let i=0;i<frotas.length;i++) { %>
+                <!-- formatação da data para esse modelo "00/00/0000" -->
+                <% if (frotas[i].data) { %>
+                    <% 
+                        const dataNascimento = new Date(frotas[i].data); 
+                        const dia = String(dataNascimento.getDate()).padStart(2, '0'); 
+                        const mes = String(dataNascimento.getMonth() + 1).padStart(2, '0');
+                        const ano = dataNascimento.getFullYear();
+                        frotas[i].data = `${dia}/${mes}/${ano}`;
+                    %>
+                <% } %>
+                <% const valorViagem = Number(frotas[i].valor_viagem).toFixed(2).replace('.', ',').replace(/\B(?=(\d{3})+(?!\d))/g, "."); %>
+                <% const valorTotalViagem = Number(frotas[i].valor_total_viagem).toFixed(2).replace('.', ',').replace(/\B(?=(\d{3})+(?!\d))/g, "."); %>
+                <tr>
+                    <td><%= frotas[i].data %></td>
+                    <td><%= primeiraLetraDosNomesEmMaiusculo(frotas[i].origem) %></td>
+                    <td><%= primeiraLetraDosNomesEmMaiusculo(frotas[i].destino) %></td>
+                    <td><%= frotas[i].frete %></td>
+                    <td><%= primeiraLetraDosNomesEmMaiusculo(frotas[i].material) %></td>
+                    <td><%= frotas[i].peso %></td>
+                    <td><%= primeiraLetraDosNomesEmMaiusculo(frotas[i].motorista) %></td>
+                    <td><%= primeiraLetraDosNomesEmMaiusculo(frotas[i].transportadora) %></td>
+
+                    <!-- para deixar a tabela limpa se não houver adiantamento nessa linha da tabela -->
+                    <% if(frotas[i].adiantamento == 0 ) { %>
+                        <td></td>
+                    <% } else { %>
+                        <td><%= frotas[i].adiantamento %></td>
+                    <% }%>
+
+                  
+
+                    <td><%= frotas[i].data_adiantamento %></td>
+                    <td>R$ <%= valorViagem %></td>
+                    <td>R$ <%= valorTotalViagem %></td>
+                </tr>
+            <% } %>
+        
+        </tbody>
+        
+    </table>
+</div>
