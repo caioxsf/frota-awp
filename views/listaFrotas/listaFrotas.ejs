@@ -4,6 +4,7 @@
 <link rel="stylesheet" href="/css/listarFrotas/listarFrotas.css">
 
 <script src="/js/cadastroFrota/excluirFrota.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/pikaday/css/pikaday.css">
 
 <%
 function primeiraLetraDosNomesEmMaiusculo(texto) {
@@ -13,19 +14,21 @@ function primeiraLetraDosNomesEmMaiusculo(texto) {
 }
 %>
 
+
 <header>
     <form>
         <div class="row g-3 d-flex" style="align-items: center;">
-
+            
+        
             <div class="col" id="exportExcel" >
                 <button id="excel" class="btn btn-success" ><i class="fas fa-file"></i> Exp. Excel</button>
             </div>
 
-            
-            
+                 
             <div class="col">
                 <input type="number" hidden value="<%= usuario.id %>" id="idPerfil" name="idPerfil">
-                <input type="date" class="form-control input1" placeholder="Primeira Data" aria-label="Primeira Data" id="primeiraData" name="primeiraData">
+                <!-- <input type="date" class="form-control input1" placeholder="Primeira Data" aria-label="Primeira Data" id="primeiraData" name="primeiraData"> -->
+                <input type="text" id="primeiraData" placeholder="DD/MM/YYYY" class="form-control input1" name="primeiraData">
             </div>
             
             <div class="col">
@@ -33,7 +36,8 @@ function primeiraLetraDosNomesEmMaiusculo(texto) {
             </div>
 
             <div class="col">
-              <input type="date" class="form-control input2" placeholder="Segunda Data" aria-label="Segunda Data" id="segundaData" name="segundaData">
+              <!-- <input type="date" class="form-control input2" placeholder="Segunda Data" aria-label="Segunda Data" id="segundaData" name="segundaData"> -->
+              <input type="text" id="segundaData" placeholder="DD/MM/YYYY" class="form-control input2" name="segundaData">
             </div>
     
             <div class="col">
@@ -141,3 +145,6 @@ function primeiraLetraDosNomesEmMaiusculo(texto) {
 
     </table>
 </div>
+
+<script src="/js/cadastroFrota/date.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/pikaday/pikaday.js"></script>

@@ -27,11 +27,19 @@ document.addEventListener('DOMContentLoaded', function() {
         let primeiraData = document.getElementById('primeiraData');
         let segundaData = document.getElementById('segundaData');
         
+        function converterDataParaFormatoISO(data) {
+            const [dia, mes, ano] = data.split('/');
+            return `${ano}-${mes}-${dia}`;
+        }
+
+        const primeiraDataISO = converterDataParaFormatoISO(primeiraData.value);
+        const segundaDataISO = converterDataParaFormatoISO(segundaData.value);
+        
         if(primeiraData && segundaData && id) {
             let obj = {
                 id: id.value,
-                primeiraData: primeiraData.value,
-                segundaData: segundaData.value
+                primeiraData: primeiraDataISO,
+                segundaData: segundaDataISO
             }
 
             let stringObj = JSON.stringify(obj);
