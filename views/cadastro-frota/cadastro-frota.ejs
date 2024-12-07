@@ -4,8 +4,13 @@
 
 <style>
     .container-frota {
-        margin: 35px;
+        margin-inline: 25px;
+        margin-top: 35px;
     }
+
+   .container-botao {
+        margin-top: 10px;
+   }
 </style>
 
 <div class="container-frota">
@@ -70,11 +75,9 @@
             </div>
         </div>
 
-        <div class="form-group">
-            <button type="button" class="btn btn-add">Efetuar frota</button>
-        </div>
-
-        <p>Valor total viagens: <%= valorviagem %></p>
+        <div class="col container-botao">
+            <button type="button" class="btn btn-secondary btn-add">Efetuar frota</button>      
+        </div>  
    
     </form>
 </div>

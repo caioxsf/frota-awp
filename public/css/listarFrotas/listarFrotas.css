@@ -1,0 +1,188 @@
+.table-hover {
+    margin-inline: 25px;
+    width: 96.9%;
+}
+
+.table>:not(caption)>*>* {
+    font-size: 12px;
+    
+}
+
+header {
+    display: flex;
+    justify-content: end;
+    position: relative;
+    top: 26px;
+    
+}
+
+/* css para o linha que cria dinamicamente ao nao encontrar nenhuma registro de frota no intervalo das datas */
+#naoTemData {
+text-align: center;      
+vertical-align: middle;    
+height: 100px;            
+font-weight: bold;        
+color: #666;  
+}
+
+.botao-search {
+width: 100px;
+padding: 8px;
+margin-right: 20px;
+}
+
+.table-responsive {
+max-height: 700px; 
+overflow-y: auto; 
+margin: 50px auto; 
+width: 90%; 
+
+}
+
+thead {
+    position: sticky;
+    top: 0;
+    background-color: #fff; 
+    z-index: 1; 
+}
+
+.footer {
+    margin-inline: 0;
+}
+
+.btn-success {
+    position: absolute;
+    left: 25px;
+    top: 0px;
+}
+
+.btn-success {
+    width: 190px;
+}
+
+@media only screen and (max-width: 1280px) {
+    
+    header {
+       margin: 25px;
+    }
+
+    .d-flex input {
+        width: 120px;
+        padding: 5px;
+    }
+
+    .ate {
+        position: absolute;
+        left: 128px;
+        bottom: 10px;
+    }
+
+    .input2 {
+        position: absolute;
+        right: 65px;
+        bottom: 0px;
+    }
+
+    .input1 {
+        position: absolute;
+        left: 500px;
+        bottom: 0px;
+    }
+
+    .botao-search {
+        position: relative;
+        left: 20px;
+        width: 50px;
+        bottom: 2px;
+        padding: 5px;
+    }
+
+    .pesquisar {
+        display: none;
+    }
+
+    .btn-success {
+        width: 110px;
+        padding: 5px;
+        position: absolute;
+        top: 615px;
+        left: 0px;
+    }
+
+}
+
+@media only screen and (max-width: 1130px) {
+    .input1 {
+        position: absolute;
+        left: 400px;
+        bottom: 0px;
+    }
+}
+
+@media only screen and (max-width: 900px) {
+    
+    header {
+       margin: 25px;
+    }
+
+    .d-flex input {
+        width: 120px;
+        padding: 5px;
+    }
+
+    .ate {
+        position: absolute;
+        left: 128px;
+        bottom: 10px;
+    }
+
+    .input2 {
+        position: absolute;
+        right: 65px;
+        bottom: 0px;
+    }
+
+    .input1 {
+        position: absolute;
+        left: 250px;
+        bottom: 0px;
+    }
+
+    .botao-search {
+        position: relative;
+        left: 20px;
+        width: 50px;
+        bottom: 2px;
+        padding: 5px;
+    }
+
+    .pesquisar {
+        display: none;
+    }
+
+    .btn-success {
+        width: 110px;
+        padding: 5px;
+        position: absolute;
+        top: 615px;
+        left: 0px;
+    }
+
+}
+
+@media only screen and (max-width: 630px) {
+    .input1 {
+        position: absolute;
+        left: 150px;
+        bottom: 0px;
+    }
+}
+
+@media only screen and (max-width: 550px) {
+    .input1 {
+        position: absolute;
+        left: 0px;
+        bottom: 0px;
+    }
+}
+    

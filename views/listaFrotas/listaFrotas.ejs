@@ -1,25 +1,9 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 <script src="/js/cadastroFrota/listarDatasEspecificas.js"></script>
-<style>
-    
+<script src="https://cdn.sheetjs.com/xlsx-0.20.3/package/dist/xlsx.full.min.js"></script>
+<link rel="stylesheet" href="/css/listarFrotas/listarFrotas.css">
 
-    table {
-       margin-top: 50px;
-    }
-
-    .table>:not(caption)>*>* {
-        font-size: 12px;
-    }
-
-    header {
-        display: flex;
-        justify-content: end;
-        position: relative;
-        top: 26px;
-     
-    }
-
-</style>
+<script src="/js/cadastroFrota/excluirFrota.js"></script>
 
 <%
 function primeiraLetraDosNomesEmMaiusculo(texto) {
@@ -30,30 +14,42 @@ function primeiraLetraDosNomesEmMaiusculo(texto) {
 %>
 
 <header>
+    <form>
+        <div class="row g-3 d-flex" style="align-items: center;">
 
-    <form >
-        <div class="row g-3">
+            <div class="col" id="exportExcel" >
+                <button id="excel" class="btn btn-success" ><i class="fas fa-file"></i> Exp. Excel</button>
+            </div>
+
+            
+            
             <div class="col">
                 <input type="number" hidden value="<%= usuario.id %>" id="idPerfil" name="idPerfil">
-              <input type="date" class="form-control" placeholder="Primeira Data" aria-label="Primeira Data" id="primeiraData" name="primeiraData">
+                <input type="date" class="form-control input1" placeholder="Primeira Data" aria-label="Primeira Data" id="primeiraData" name="primeiraData">
             </div>
+            
             <div class="col">
-              <input type="date" class="form-control" placeholder="Segunda Data" aria-label="Segunda Data" id="segundaData" name="segundaData">
+                <span class="ate">-</span>
+            </div>
+
+            <div class="col">
+              <input type="date" class="form-control input2" placeholder="Segunda Data" aria-label="Segunda Data" id="segundaData" name="segundaData">
             </div>
     
             <div class="col">
-                <button type="button" id="btn-add" class="btn btn-secondary"><i class="fa-solid fa-magnifying-glass"></i> Pesquisar</button>
+                <button type="button" id="btn-add" class="btn btn-secondary botao-search"><i class="fa-solid fa-magnifying-glass"></i> <span class="pesquisar">Pesquisar</span> </button>
             </div>
+            
           </div>
+          
     </form>
-
-  
-
-    
+   
 </header>
 
 <div class="table-responsive">
-    <table class="table table-hover">
+    
+    <table class="table table-hover" id="exportarExcel">
+        
         <thead>
             <tr>
                 <th title="Data">Data</th>
@@ -66,13 +62,16 @@ function primeiraLetraDosNomesEmMaiusculo(texto) {
                 <th title="Transportadora">Transp.</th>
                 <th title="Adiantamento">Adiant.</th>
                 <th title="Data Adiantamento">Dt. Adiant.</th>
+                <th title="Comissão">Comissão</th>
                 <th title="Valor Viagem">Vl. Viagem</th>
-                <th title="Valor Total Viagem">Vl. Total</th>
+                <th title="Ações">Ações</th>
+                <th title="Salário">Sal.</th>
+                <!-- <th title="Valor Total Viagem">Vl. Total</th> -->
             </tr>
         </thead>
-        <tbody>
-            
-            
+
+        <tbody id="filtroBuscaDataEspecifica">
+
             <% for(let i=0;i<frotas.length;i++) { %>
                 <!-- formatação da data para esse modelo "00/00/0000" -->
                 <% if (frotas[i].data) { %>
@@ -84,15 +83,38 @@ function primeiraLetraDosNomesEmMaiusculo(texto) {
                         frotas[i].data = `${dia}/${mes}/${ano}`;
                     %>
                 <% } %>
+
+                <% if (frotas[i].data_adiantamento != null) { %>
+                    <%
+                        // transformando a data do adiantamento no modelo = 00/00/0000
+                        const dataAdiantamento = new Date(frotas[i].data_adiantamento); 
+                        const diaa = String(dataAdiantamento.getDate()).padStart(2, '0'); 
+                        const mess = String(dataAdiantamento.getMonth() + 1).padStart(2, '0');
+                        const anoo = dataAdiantamento.getFullYear();
+                        frotas[i].data_adiantamento = `${diaa}/${mess}/${anoo}`;
+                    %>
+                <% }  %>
+                   
+            
+                    
+                <% 
+                    let comissao = frotas[i].valor_viagem * 8 / 100;
+                %>
+
                 <% const valorViagem = Number(frotas[i].valor_viagem).toFixed(2).replace('.', ',').replace(/\B(?=(\d{3})+(?!\d))/g, "."); %>
-                <% const valorTotalViagem = Number(frotas[i].valor_total_viagem).toFixed(2).replace('.', ',').replace(/\B(?=(\d{3})+(?!\d))/g, "."); %>
+                <!-- const valorTotalViagem = Number(frotas[i].valor_total_viagem).toFixed(2).replace('.', ',').replace(/\B(?=(\d{3})+(?!\d))/g, "."); -->
+                <% const valorFrete = Number(frotas[i].frete).toFixed(2).replace('.', ',').replace(/\B(?=(\d{3})+(?!\d))/g, "."); %>
+                <% const valorComissao = Number(comissao).toFixed(2).replace('.', ',').replace(/\B(?=(\d{3})+(?!\d))/g, "."); %>
+                <% const valorAdiantamento = Number(frotas[i].adiantamento).toFixed(2).replace('.', ',').replace(/\B(?=(\d{3})+(?!\d))/g, "."); %>
+
+                
                 <tr>
                     <td><%= frotas[i].data %></td>
                     <td><%= primeiraLetraDosNomesEmMaiusculo(frotas[i].origem) %></td>
                     <td><%= primeiraLetraDosNomesEmMaiusculo(frotas[i].destino) %></td>
-                    <td><%= frotas[i].frete %></td>
+                    <td>R$ <%= valorFrete %></td>
                     <td><%= primeiraLetraDosNomesEmMaiusculo(frotas[i].material) %></td>
-                    <td><%= frotas[i].peso %></td>
+                    <td><%= frotas[i].peso %> Kg</td>
                     <td><%= primeiraLetraDosNomesEmMaiusculo(frotas[i].motorista) %></td>
                     <td><%= primeiraLetraDosNomesEmMaiusculo(frotas[i].transportadora) %></td>
 
@@ -100,18 +122,22 @@ function primeiraLetraDosNomesEmMaiusculo(texto) {
                     <% if(frotas[i].adiantamento == 0 ) { %>
                         <td></td>
                     <% } else { %>
-                        <td><%= frotas[i].adiantamento %></td>
+                        <td style="color: lightcoral;">R$ -<%= valorAdiantamento %></td>
                     <% }%>
 
-                  
-
                     <td><%= frotas[i].data_adiantamento %></td>
+            
+                    <td style="color: rgb(98, 168, 98);">R$ +<%= valorComissao %> </td>
                     <td>R$ <%= valorViagem %></td>
-                    <td>R$ <%= valorTotalViagem %></td>
+                    <!-- <td>R$  valorTotalViagem </td> -->
+                    <td>
+                        <button type="button" class="btnExcluir" data-codigo="<%= frotas[i].id %>" style="border: none; background-color: transparent;"><i class="fas fa-trash" style="color: lightcoral; "></i></button>
+                        <a href="/frotas/alterar/<%= frotas[i].id %>"><i class="fas fa-edit" style="color: lightskyblue;"></i></a>
+                    </td>
                 </tr>
             <% } %>
-        
+       
         </tbody>
-        
+
     </table>
 </div>

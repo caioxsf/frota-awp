@@ -1,11 +1,11 @@
 document.addEventListener('DOMContentLoaded', function() {
 
     let btn = document.querySelector('.btn-add');
-    btn.addEventListener('click', cadastro);
+    btn.addEventListener('click', alterar);
 
-    function cadastro () {
+    function alterar () {
         
-        let id = document.getElementById('idPerfil');
+        let idPerfil = document.getElementById('idPerfil');
         let data = document.getElementById('data');
         let origem = document.getElementById('origem');
         let destino = document.getElementById('destino');
@@ -16,9 +16,11 @@ document.addEventListener('DOMContentLoaded', function() {
         let transportadora = document.getElementById('transportadora');
         let adiantamento = document.getElementById('adiantamento');
         let dataAdiantamento = document.getElementById('dataAdiantamento');
-        
+        let id = document.getElementById('id');
+
         if(data) {
             let obj = {
+                idPerfil: idPerfil.value,
                 id: id.value,
                 data: data.value,
                 origem: origem.value,
@@ -34,7 +36,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
             let stringObj = JSON.stringify(obj);
 
-            fetch('/cadastro', {
+            fetch('/frotas/alterar/', {
                 method: 'POST',
                 headers: {
                     'Content-Type':'application/json'
@@ -45,8 +47,10 @@ document.addEventListener('DOMContentLoaded', function() {
                 return resposta.json();
             })
             .then(function(resposta){
-                if(resposta.ok)
+                if(resposta.ok) {
                     alert(resposta.msg)
+                    window.location.href = '/frotas'
+                }
                 else
                     alert(resposta.msg);
             })

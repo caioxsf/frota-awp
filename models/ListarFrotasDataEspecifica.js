@@ -89,7 +89,7 @@ class listaFrotasDataEspecificas {
 
 
     async listarSomenteEmDatasEspecificas (id,data1,data2) {
-        let sql = `select * from cadastro_frota where id_perfil = ? and cad_data between ? and ?`;
+        let sql = `select * from cadastro_frota where id_perfil = ? and cad_data between ? and ? order by cad_data `;
         let valores = [id,data1,data2];
         let resultado = await db.ExecutaComando(sql,valores);
         let listaFrota = [];
@@ -113,7 +113,23 @@ class listaFrotasDataEspecificas {
         return listaFrota; 
     }
 
-   
+   toJSON() {
+    return {
+        "id": this.#id,
+        "data": this.#data,
+        "origem": this.#origem,
+        "destino": this.#destino,
+        "frete": this.#frete,
+        "material": this.#material,
+        "peso": this.#peso,
+        "motorista": this.#motorista,
+        "transportadora": this.#transportadora,
+        "adiantamento": this.#adiantamento,
+        "data_adiantamento": this.#data_adiantamento,
+        "valor_viagem": this.#valor_viagem,
+        "valor_total_viagem": this.#valor_total_viagem
+    }
+   }
 
 }
 

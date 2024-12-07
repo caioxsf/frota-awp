@@ -10,6 +10,7 @@ CREATE TABLE `cadastro_frota` (
   `cad_transportadora` varchar(50) DEFAULT NULL,
   `cad_adiantamento` decimal(10,2) DEFAULT NULL,
   `cad_data_adiantamento` date DEFAULT NULL,
+  `comissao` decimal(10,2) DEFAULT NULL,
   `valor_viagem` decimal(10,2) DEFAULT NULL,
   `valor_total_viagem` decimal(10,2) DEFAULT NULL,
   `id_perfil` int(11) DEFAULT NULL,

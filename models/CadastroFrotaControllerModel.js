@@ -14,11 +14,12 @@ class CadastroFrotaControllerModel {
     #transportadora;
     #adiantamento;
     #data_adiantamento;
+    #comissao
     #valor_viagem
-    #valor_total_viagem
+    // #valor_total_viagem
     #id_perfil
 
-    constructor(id, data, origem, destino, frete, material, peso, motorista, transportadora, adiantamento, data_adiantamento, valor_viagem, valor_total_viagem, id_perfil) {
+    constructor(id, data, origem, destino, frete, material, peso, motorista, transportadora, adiantamento, data_adiantamento, comissao, valor_viagem, id_perfil) {
         this.#id = id;
         this.#data = data;
         this.#origem = origem;
@@ -30,8 +31,9 @@ class CadastroFrotaControllerModel {
         this.#transportadora = transportadora;
         this.#adiantamento = adiantamento;
         this.#data_adiantamento = data_adiantamento;
-        this.valor_viagem = valor_viagem;
-        this.#valor_total_viagem = valor_total_viagem
+        this.#comissao = comissao;
+        this.#valor_viagem = valor_viagem;
+        // this.#valor_total_viagem = valor_total_viagem
         this.#id_perfil = id_perfil
     }
 
@@ -68,11 +70,15 @@ class CadastroFrotaControllerModel {
     get data_adiantamento() { return this.#data_adiantamento; } 
     set data_adiantamento(value) { this.#data_adiantamento = value; }
 
+    get comissao() { return this.#comissao; } 
+    set comissao(value) { this.#comissao = value; }
+
     get valor_viagem() { return this.#valor_viagem; } 
     set valor_viagem(value) { this.#valor_viagem = value; }
 
-    get valor_total_viagem() { return this.#valor_total_viagem; } 
-    set valor_total_viagem(value) { this.#valor_total_viagem = value; }
+
+    // get valor_total_viagem() { return this.#valor_total_viagem; } 
+    // set valor_total_viagem(value) { this.#valor_total_viagem = value; }
 
     get id_perfil() { return this.#id_perfil; } 
     set id_perfil(value) { this.#id_perfil = value; }
@@ -80,8 +86,8 @@ class CadastroFrotaControllerModel {
 
 
     async cadastrarFrota () {
-        let sql = `insert into cadastro_frota(cad_data,cad_origem,cad_destino,cad_frete,cad_material,cad_peso,cad_motorista,cad_transportadora,cad_adiantamento,cad_data_adiantamento, valor_viagem, valor_total_viagem, id_perfil) values (?,?,?,?,?,?,?,?,?,?,?,?,?)`;
-        let valores = [this.#data, this.#origem, this.#destino, this.#frete, this.#material, this.#peso, this.#motorista, this.#transportadora, this.#adiantamento, this.#data_adiantamento, this.#valor_viagem, this.#valor_total_viagem, this.#id_perfil];
+        let sql = `insert into cadastro_frota(cad_data,cad_origem,cad_destino,cad_frete,cad_material,cad_peso,cad_motorista,cad_transportadora,cad_adiantamento,cad_data_adiantamento, comissao, valor_viagem, id_perfil) values (?,?,?,?,?,?,?,?,?,?,?,?,?)`;
+        let valores = [this.#data, this.#origem, this.#destino, this.#frete, this.#material, this.#peso, this.#motorista, this.#transportadora, this.#adiantamento, this.#data_adiantamento, this.#comissao, this.#valor_viagem, this.#id_perfil];
         let resultado = await db.ExecutaComandoNonQuery(sql,valores);
         return resultado;
     } 
@@ -111,8 +117,9 @@ class CadastroFrotaControllerModel {
                 registro['cad_transportadora'],
                 registro['cad_adiantamento'],
                 registro['cad_data_adiantamento'],
-                registro['valor_viagem'],
-                registro['valor_total_viagem']
+                registro['comissao'],
+                registro['valor_viagem']
+                // registro['valor_total_viagem']
             ));
         }
         return listaFrota; 
@@ -136,20 +143,70 @@ class CadastroFrotaControllerModel {
                 registro['cad_transportadora'],
                 registro['cad_adiantamento'],
                 registro['cad_data_adiantamento'],
-                registro['valor_viagem'],
-                registro['valor_total_viagem']
+                registro['comissao'],
+                registro['valor_viagem']
+                // registro['valor_total_viagem']
             ));
         }
         return listaFrota; 
     }
 
-    async listarCadastroDeFrotaValorTotalViagem (id) {
-        let sql = `select valor_total_viagem from cadastro_frota where id_perfil = ? order by cad_id desc limit 1 `;
+    async obterFrota (id) {
+        let sql = `select * from cadastro_frota where cad_id = ?`;
         let valores = [id];
-        let resultado = await db.ExecutaComando(sql,valores);
-        return resultado[0]?.valor_total_viagem ? parseFloat(resultado[0].valor_total_viagem) : 0;
-        
+
+        var colunas = await db.ExecutaComando(sql,valores);
+        if(colunas.length > 0) {
+            var coluna = colunas[0];
+
+            return new CadastroFrotaControllerModel(
+                coluna['cad_id'],
+                coluna['cad_data'],
+                coluna['cad_origem'],
+                coluna['cad_destino'],
+                coluna['cad_frete'],
+                coluna['cad_material'],
+                coluna['cad_peso'],
+                coluna['cad_motorista'],
+                coluna['cad_transportadora'],
+                coluna['cad_adiantamento'],
+                coluna['cad_data_adiantamento'],
+                coluna['valor_viagem'],
+                coluna['valor_total_viagem'],
+                coluna['id_perfil'],
+                coluna['comissao']
+            )
+        }
+
+        return null
     }
+
+    async alterarFrota () {
+        let sql = `update cadastro_frota set cad_data = ?, cad_origem = ?, cad_destino = ?, cad_frete = ?, cad_material = ?, cad_peso = ?, cad_motorista = ?, cad_transportadora = ?,    
+                   cad_adiantamento = ?, cad_data_adiantamento = ?, valor_viagem = ?, comissao = ?, id_perfil = ? where cad_id = ?`
+
+        let valores = [this.#data, this.#origem, this.#destino, this.#frete, this.#material, this.#peso, this.#motorista, this.#transportadora, this.#adiantamento, this.#data_adiantamento, this.#comissao, this.#valor_viagem, this.#id_perfil, this.#id];
+        let resultado = await db.ExecutaComandoNonQuery(sql,valores);
+        return resultado;
+    }
+
+    async excluir (cod) {
+        let sql = `delete from cadastro_frota where cad_id = ?`
+        let valores = [cod];
+
+        let resultado = await db.ExecutaComandoNonQuery(sql,valores);
+        return resultado;
+    }
+
+    // quando eu quiser listar o valor total de todas as viagens
+
+    // async listarCadastroDeFrotaValorTotalViagem (id) {
+    //     let sql = `select valor_total_viagem from cadastro_frota where id_perfil = ? order by cad_id desc limit 1 `;
+    //     let valores = [id];
+    //     let resultado = await db.ExecutaComando(sql,valores);
+    //     return resultado[0]?.valor_total_viagem ? parseFloat(resultado[0].valor_total_viagem) : 0;
+        
+    // }
 }
 
 

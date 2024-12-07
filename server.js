@@ -27,6 +27,6 @@ app.use('/register', registerRoute);
 app.use('/cadastro', cadastroFrotaRoute);
 app.use('/frotas', frotasRoute)
 
-app.listen(5000, function() {
+app.listen(5002, function() {
     console.log("servidor web em funcionamento!")
 })
