@@ -1,0 +1,46 @@
+<link rel="stylesheet" href="/css/perfil/perfil.css">
+<script src="/js/perfil/alterarPerfil.js"></script>
+
+<div class="container-perfil">
+    <legend>Seu perfil</legend>
+    <form action="">
+
+        <input type="text" id="id" name="id" value="<%= usuario.id %>" hidden>
+
+        <div class="row">
+            <div class="col">
+                <label for="" class="form-label">Nome</label>
+                <input type="text" class="form-control" value="<%= usuario.nome %>" id="nome" name="nome">
+            </div>
+            
+            <div class="col">
+                <label for="" class="form-label">Usuário</label>
+                <input type="text" class="form-control" value="<%= usuario.usuario %>" id="usuario" name="usuario">
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col">
+                <label for="" class="form-label">Email</label>
+                <input type="text" class="form-control" value="<%= usuario.email %>" id="email" name="email">
+            </div>
+
+            <div class="col">
+                <label for="" class="form-label">Telefone</label>
+                <input type="text" class="form-control" value="<%= usuario.telefone %>" id="telefone" name="telefone">
+            </div>
+        </div>
+
+     
+        <div class="col" style="margin-bottom: 15px;">
+            <label for="" class="form-label">Senha</label>
+            <input type="password" class="form-control" value="<%= usuario.senha %>" disabled>
+        </div>
+      
+        <a style="color: grey;">Editar perfil ></a>
+        <a href="/perfil/alterar/senha/<%= usuario.id %>" >Alterar senha</a><br><br>
+
+        <button class="btn btn-dark" id="btn-perfil">Confirmar mudanças</button>
+    
+    </form>
+</div>

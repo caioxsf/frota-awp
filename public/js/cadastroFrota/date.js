@@ -1,7 +1,7 @@
 document.addEventListener('DOMContentLoaded', () => {
     const picker1 = new Pikaday({
       field: document.getElementById('primeiraData'),
-      format: 'DD/MM/YYYY', // Configuração do formato brasileiro
+      format: 'DD/MM/YYYY', 
       i18n: {
         previousMonth: 'Mês Anterior',
         nextMonth: 'Próximo Mês',
@@ -16,7 +16,7 @@ document.addEventListener('DOMContentLoaded', () => {
         weekdaysShort: ['Dom', 'Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sáb']
       },
       onSelect: function(date) {
-        // Formatar manualmente para o formato desejado (DD/MM/YYYY)
+        
         const formattedDate = date.toLocaleDateString('pt-BR');
         document.getElementById('primeiraData').value = formattedDate;
       }
@@ -24,7 +24,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const picker2 = new Pikaday({
         field: document.getElementById('segundaData'),
-        format: 'DD/MM/YYYY', // Configuração do formato brasileiro
+        format: 'DD/MM/YYYY', 
         i18n: {
           previousMonth: 'Mês Anterior',
           nextMonth: 'Próximo Mês',
@@ -39,7 +39,7 @@ document.addEventListener('DOMContentLoaded', () => {
           weekdaysShort: ['Dom', 'Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sáb']
         },
         onSelect: function(date) {
-          // Formatar manualmente para o formato desejado (DD/MM/YYYY)
+          
           const formattedDate = date.toLocaleDateString('pt-BR');
           document.getElementById('segundaData').value = formattedDate;
         }

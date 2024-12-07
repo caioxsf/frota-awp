@@ -53,6 +53,40 @@ class UsuarioModel {
         return null;
     }
 
+    async alterarConta () {
+        let sql = `update usuario set usu_nome = ?, usu_email = ?, usu_telefone = ?, usu_usuario = ? where usu_id = ?`
+        let valores = [this.#nome, this.#email, this.#telefone, this.#usuario, this.#id];
+        let resultado = await db.ExecutaComandoNonQuery(sql,valores);
+        return resultado;
+    }
+    
+
+    async alterarSenha () {
+        let sql = `update usuario set usu_nome = ?, usu_email = ?, usu_telefone = ?, usu_usuario = ?, usu_senha = ? where usu_id = ?`
+        let valores = [this.#nome, this.#email, this.#telefone, this.#usuario, this.#senha ,this.#id];
+        let resultado = await db.ExecutaComandoNonQuery(sql,valores);
+        return resultado;
+    }
+
+    async verificarSenhaAtual (id, senha) {
+        let sql = `select * from usuario where usu_id = ? and usu_senha = ?`;
+        let valores = [id,senha];
+        var colunas = await db.ExecutaComando(sql,valores)
+        if(colunas.length > 0) {
+            var coluna = colunas[0];
+
+            return new UsuarioModel(
+                coluna['usu_id'],
+                coluna['usu_nomwe'],
+                coluna['usu_email'],
+                coluna['usu_telefone'],
+                coluna['usu_usuario'],
+                coluna['usu_senha']
+            )
+        }
+        return null
+    }
+
 }
 
 module.exports = UsuarioModel;

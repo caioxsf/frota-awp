@@ -20,6 +20,7 @@ header {
     width: 130px;
 }
 
+
 /* css para o linha que cria dinamicamente ao nao encontrar nenhuma registro de frota no intervalo das datas */
 #naoTemData {
 text-align: center;      
@@ -58,11 +59,15 @@ thead {
     position: absolute;
     left: 25px;
     top: 0px;
+    background: #217346!important;
+    border: transparent!important;
 }
 
-.btn-success {
-    width: 190px;
+.btn-success:hover {
+    background: #20663f!important;
 }
+
+
 
 @media only screen and (max-width: 1280px) {
     

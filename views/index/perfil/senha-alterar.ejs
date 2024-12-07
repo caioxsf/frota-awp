@@ -1,0 +1,50 @@
+<link rel="stylesheet" href="/css/perfil/perfil.css">
+<script src="/js/perfil/alterarSenha.js"></script>
+
+<div class="container-perfil">
+    <legend>Alterar senha</legend>
+    <form action="">
+
+        <input type="text" id="id" name="id" value="<%= usuario.id %>" hidden>
+
+        <div class="row" hidden>
+            <div class="col">
+                <label for="" class="form-label">Nome</label>
+                <input type="text" class="form-control" value="<%= usuario.nome %>" id="nome" name="nome">
+            </div>
+            
+            <div class="col">
+                <label for="" class="form-label">Usuário</label>
+                <input type="text" class="form-control" value="<%= usuario.usuario %>" id="usuario" name="usuario">
+            </div>
+        </div>
+
+        <div class="row" hidden>
+            <div class="col">
+                <label for="" class="form-label">Email</label>
+                <input type="text" class="form-control" value="<%= usuario.email %>" id="email" name="email">
+            </div>
+
+            <div class="col">
+                <label for="" class="form-label">Telefone</label>
+                <input type="text" class="form-control" value="<%= usuario.telefone %>" id="telefone" name="telefone">
+            </div>
+        </div>
+
+        <div class="col" style="margin-bottom: 15px;">
+            <label for="" class="form-label">Nova senha</label>
+            <input type="password" class="form-control" id="novasenha" name="novasenha">
+        </div>
+
+        <div class="col" style="margin-bottom: 15px;">
+            <label for="" class="form-label">Senha atual</label>
+            <input type="password" class="form-control" id="senhaatual" name="senhaatual">
+        </div>
+      
+        <a href="/perfil/alterar/<%= usuario.id %>">Editar perfil <</a>
+        <a style="color: grey;" >Alterar senha</a><br><br>
+
+        <button class="btn btn-dark" id="btn-perfil">Confirmar mudanças</button>
+    
+    </form>
+</div>

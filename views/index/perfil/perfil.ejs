@@ -1,0 +1,40 @@
+<link rel="stylesheet" href="/css/perfil/perfil.css">
+
+<div class="container-perfil">
+    <legend>Seu perfil</legend>
+    <form action="">
+
+        <div class="row">
+            <div class="col">
+                <label for="" class="form-label">Nome</label>
+                <input type="text" class="form-control" value="<%= usuario.nome %>" disabled>
+            </div>
+            
+            <div class="col">
+                <label for="" class="form-label">Usuário</label>
+                <input type="text" class="form-control" value="<%= usuario.usuario %>" disabled>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col">
+                <label for="" class="form-label">Email</label>
+                <input type="text" class="form-control" value="<%= usuario.email %>" disabled>
+            </div>
+
+            <div class="col">
+                <label for="" class="form-label">Telefone</label>
+                <input type="text" class="form-control" value="<%= usuario.telefone %>" disabled>
+            </div>
+        </div>
+
+     
+        <div class="col" style="margin-bottom: 15px;">
+            <label for="" class="form-label">Senha</label>
+            <input type="password" class="form-control" value="<%= usuario.senha %>" disabled>
+        </div>
+      
+        <a href="/perfil/alterar/<%= usuario.id %>" >Editar perfil</a>
+    
+    </form>
+</div>

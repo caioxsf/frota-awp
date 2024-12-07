@@ -1,0 +1,9 @@
+.container-perfil {
+    margin: 35px;
+}
+
+@media (max-width: 550px) {
+    .container-perfil {
+        margin: 10px;
+    }
+}
