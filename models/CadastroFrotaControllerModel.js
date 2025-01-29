@@ -92,6 +92,9 @@ class CadastroFrotaControllerModel {
         return resultado;
     } 
 
+
+    
+
     async valorTotalFrota (id) {
         let sql = `select sum(cad_frete * cad_peso) as total from cadastro_frota where id_perfil = ?`
         let valores = [id];
@@ -180,6 +183,7 @@ class CadastroFrotaControllerModel {
 
         return null
     }
+ 
 
     async alterarFrota () {
         let sql = `update cadastro_frota set cad_data = ?, cad_origem = ?, cad_destino = ?, cad_frete = ?, cad_material = ?, cad_peso = ?, cad_motorista = ?, cad_transportadora = ?,    
